@@ -8,8 +8,15 @@ import org.springframework.web.reactive.handler.SimpleUrlHandlerMapping
 import org.springframework.web.reactive.socket.WebSocketHandler
 import org.springframework.web.reactive.socket.server.support.WebSocketHandlerAdapter
 
+/**
+ * WebSocket 통신을 사용하는 경우, 일반적인 HTTP 요청을 처리하는 컨트롤러(Controller)와는 다른 접근 방식이 필요하다.
+ * WebSocket은 연결 지향적이며, 한 번의 연결 설정 후 지속적인 양방향 통신을 가능하게 한다.
+ * 따라서, WebSocket 통신을 위해서는 WebSocketHandler를 사용하여 연결을 관리하고 메시지를 처리한다.
+ */
 @Configuration
-class WebSocketConfig(private val chatWebSocketHandler: ChatWebSocketHandler) {
+class WebSocketConfig(
+        private val chatWebSocketHandler: ChatWebSocketHandler
+) {
 
     /**
      * WebSocket 요청을 처리할 엔드포인트와 그 엔드포인트를 처리할 WebSocketHandler를 매핑한다.
