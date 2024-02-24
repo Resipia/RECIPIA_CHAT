@@ -1,4 +1,4 @@
-package com.recipia.chat.socket
+package com.recipia.chat.controller.socket
 
 import com.recipia.chat.domain.Message
 import com.recipia.chat.service.ChatRoomService
