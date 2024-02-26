@@ -4,6 +4,7 @@ import com.recipia.chat.domain.ChatRoom
 import com.recipia.chat.repository.ChatRoomRepository
 import org.springframework.stereotype.Service
 import reactor.core.publisher.Mono
+import java.time.LocalDateTime
 
 /**
  * 채팅방 서비스
@@ -26,7 +27,12 @@ class ChatRoomService(
         return chatRoomRepository.findByRoomIdentifier(roomIdentifier)
                 .switchIfEmpty(Mono.defer {
                     // 해당 roomIdentifier를 가진 채팅방이 없는 경우 새로운 채팅방을 생성하고 저장
-                    val newChatRoom = ChatRoom(roomIdentifier, memberIds.toMutableSet())
+                    val newChatRoom = ChatRoom(
+                            roomIdentifier = roomIdentifier,
+                            memberIds = memberIds.toMutableSet(),
+                            createdAt = LocalDateTime.now(),
+                            updatedAt = LocalDateTime.now()
+                    )
                     chatRoomRepository.save(newChatRoom)
                 })
     }

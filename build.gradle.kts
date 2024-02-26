@@ -38,6 +38,14 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 
+	// jwt
+	implementation("org.json:json:20210307")
+	implementation("io.jsonwebtoken:jjwt-api:0.11.2")
+	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.2")
+	runtimeOnly("io.jsonwebtoken:jjwt-orgjson:0.11.2") {
+		exclude(group = "org.json", module = "json")
+	}
+
 	// webSocket, zipkin, actuator, feign
 	implementation("org.springframework.boot:spring-boot-starter-websocket")
 	implementation("io.micrometer:micrometer-tracing-bridge-brave")
