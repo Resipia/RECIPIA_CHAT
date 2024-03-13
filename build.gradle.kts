@@ -48,9 +48,9 @@ dependencies {
 
 	// webSocket, zipkin, actuator, feign
 	implementation("org.springframework.boot:spring-boot-starter-websocket")
-	implementation("io.micrometer:micrometer-tracing-bridge-brave")
-	implementation("org.springframework.boot:spring-boot-starter-actuator")
-	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+//	implementation("io.micrometer:micrometer-tracing-bridge-brave")
+//	implementation("org.springframework.boot:spring-boot-starter-actuator")
+//	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 
 	// mongo
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
