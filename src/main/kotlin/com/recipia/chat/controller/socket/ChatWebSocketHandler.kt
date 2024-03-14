@@ -55,7 +55,7 @@ class ChatWebSocketHandler(
                 .flatMap { webSocketMessage ->
                     val messageText = webSocketMessage.payloadAsText
                     val chatMessage = ChatMessage(
-                            chatRoomId = chatRoomId,
+                            roomId = chatRoomId,
                             senderId = senderId,
                             message = messageText,
                             createdAt = LocalDateTime.now()
