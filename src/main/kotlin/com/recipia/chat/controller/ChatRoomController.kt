@@ -12,6 +12,10 @@ class ChatRoomController(
         private val chatRoomService:ChatRoomService
 ) {
 
+    /**
+     * 클라이언트가 채팅방 정보를 요청하면, getChatRoom 메소드가 호출된다.
+     * 이 메소드는 주어진 멤버 ID를 기반으로 채팅방을 조회하거나 새로운 채팅방을 생성한다.
+     */
     @GetMapping("/chatRoom")
     fun getChatRoom(memberIds: Set<String>): Mono<ChatRoom> {
         return chatRoomService.getOrCreateChatRoom(memberIds)
