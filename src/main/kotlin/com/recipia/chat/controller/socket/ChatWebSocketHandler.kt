@@ -1,8 +1,8 @@
 package com.recipia.chat.controller.socket
 
-import com.recipia.chat.domain.Message
+import com.recipia.chat.domain.ChatMessage
 import com.recipia.chat.service.ChatRoomService
-import com.recipia.chat.service.MessageService
+import com.recipia.chat.service.ChatMessageService
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
@@ -15,7 +15,7 @@ import java.time.LocalDateTime
 @Component
 class ChatWebSocketHandler(
         private val chatRoomService: ChatRoomService,
-        private val messageService: MessageService
+        private val chatMessageService: ChatMessageService
 ) : WebSocketHandler {
 
     private val sessions: MutableMap<String, MutableList<WebSocketSession>> = mutableMapOf()
@@ -54,7 +54,7 @@ class ChatWebSocketHandler(
         return session.receive() // 클라이언트로부터 메시지를 비동기적으로 받는다.
                 .flatMap { webSocketMessage ->
                     val messageText = webSocketMessage.payloadAsText
-                    val message = Message(
+                    val chatMessage = ChatMessage(
                             chatRoomId = chatRoomId,
                             senderId = senderId,
                             message = messageText,
@@ -62,8 +62,8 @@ class ChatWebSocketHandler(
                     )
 
                     // 메시지를 저장하고 해당 채팅방의 모든 클라이언트에게 메시지를 브로드캐스트합니다.
-                    messageService.saveMessage(message)
-                            .flatMap { broadcast(chatRoomId, message) }
+                    chatMessageService.saveMessage(chatMessage)
+                            .flatMap { broadcast(chatRoomId, chatMessage) }
                 }.then()
     }
 
@@ -71,9 +71,9 @@ class ChatWebSocketHandler(
      * 주어진 chatRoomId에 해당하는 모든 세션에게 메시지를 전송하는 메서드다.
      * sessions 맵에서 해당 채팅방의 세션 리스트를 조회하고, 각 세션에 메시지를 전송한다.
      */
-    private fun broadcast(chatRoomId: String, message: Message): Mono<Void> {
+    private fun broadcast(chatRoomId: String, chatMessage: ChatMessage): Mono<Void> {
         sessions[chatRoomId]?.forEach { session ->
-            session.send(Mono.just(session.textMessage(message.toString()))).subscribe()
+            session.send(Mono.just(session.textMessage(chatMessage.toString()))).subscribe()
         }
         return Mono.empty()
     }
