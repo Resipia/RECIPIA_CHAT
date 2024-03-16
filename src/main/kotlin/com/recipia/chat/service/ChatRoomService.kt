@@ -38,7 +38,7 @@ class ChatRoomService(
     }
 
     /**
-     * 채팅방 목록을 조회
+     * 채팅방 목록을 조회한다.
      */
     fun getUserChatRooms(memberId: String): Flux<ChatRoom> {
         return chatRoomRepository.findAllByMemberIdsContaining(memberId)
