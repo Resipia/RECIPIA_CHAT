@@ -21,7 +21,7 @@ class WebSocketConfig : WebSocketMessageBrokerConfigurer {
      * SockJS는 웹소켓을 지원하지 않는 브라우저에서도 백업 옵션으로 폴링 등의 기술을 사용할 수 있게 해줍니다.
      */
     override fun registerStompEndpoints(registry: StompEndpointRegistry) {
-        registry.addEndpoint("/ws")
+        registry.addEndpoint("/recipia-websocket") // 클라이언트가 웹소켓 연결을 시작할 수 있는 엔드포인트를 등록합니다.
             .setAllowedOrigins("*") // 모든 도메인에서의 접속을 허용합니다.
             .withSockJS() // SockJS 지원을 활성화합니다.
     }
